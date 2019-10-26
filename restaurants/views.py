@@ -126,3 +126,30 @@ def restaurant_delete(request, restaurant_id):
         return redirect('no-access')
     restaurant_obj.delete()
     return redirect('restaurant-list')
+
+
+def item_update(request, restaurant_id, item_id):
+    restaurant_obj = Restaurant.objects.get(id=restaurant_id)
+    item_obj = Item.objects.get(id=item_id)
+    if not (request.user.is_staff or request.user == restaurant_obj.owner):
+        return redirect('no-access')
+    form = ItemForm(instance=item_obj)
+    if request.method == "POST":
+        form = ItemForm(request.POST, request.FILES or None, instance=item_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('restaurant-detail', restaurant_id)
+    context = {
+        "form":form,
+        "restaurant_obj":restaurant_obj,
+        "item_obj": item_obj,
+    }
+    return render(request, 'item_update.html', context)
+
+def item_delete(request, restaurant_id, item_id):
+    restaurant_obj = Restaurant.objects.get(id=restaurant_id)
+    if not (request.user.is_staff):
+        return redirect('no-access')
+    Item.objects.get(id=item_id).delete()
+    return redirect('restaurant-detail', restaurant_id)
+

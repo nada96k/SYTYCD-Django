@@ -18,20 +18,21 @@ from django.urls import path
 from restaurants import views
 from django.conf import settings
 from django.conf.urls.static import static
-# from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('',views.restaurant_list ,name='restaurant-list'),
     path('restaurants/<int:restaurant_id>/detail/',views.restaurant_detail ,name='restaurant-detail'),
-    # path('restaurants/<int:restaurant_id>/detail/',views.restaurant_detail ,name='restaurant-detail')
-
+    
     path('restaurants/create/',views.restaurant_create ,name='restaurant-create'),
     path('restaurants/<int:restaurant_id>/update/',views.restaurant_update ,name='restaurant-update'),
     path('restaurants/<int:restaurant_id>/delete/',views.restaurant_delete ,name='restaurant-delete'),
 
     path('restaurants/<int:restaurant_id>/item/add/',views.item_create ,name='item-create'),
+    path('restaurants/<int:restaurant_id>/item/<int:item_id>/update/',views.item_update ,name='item-update'),
+    path('restaurants/<int:restaurant_id>/item/<int:item_id>/delete/',views.item_delete ,name='item-delete'),
 
     path('signup/',views.signup ,name='signup'),
     path('signin/',views.signin ,name='signin'),

@@ -25,9 +25,20 @@
         <p><b>{{item.name}}</b></p>
         <p>{{item.description|linebreaks}}</p>
         <p>{{item.price}} KWD</p>
+      {% if request.user.is_staff or request.user == restaurant.owner %}
+        <div class="col-sm-4">
+            <a href="{% url 'item-update' restaurant.id item.id %}" class="btn btn-primary">Update item</a>
+
+            <a href="{% url 'item-delete' restaurant.id item.id %}" class="btn btn-danger ">Delete item </a>
+        </div>
+      {% endif %}
       </li>
+
     {% endfor %}
   </ul>
+
+
+
   <div class="card-body">
     <div class="row text-center">
       {% if request.user.is_staff %}
