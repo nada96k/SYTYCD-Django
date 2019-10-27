@@ -139,6 +139,7 @@ def item_update(request, restaurant_id, item_id):
         if form.is_valid():
             form.save()
             return redirect('restaurant-detail', restaurant_id)
+        print (form.errors)
     context = {
         "form":form,
         "restaurant_obj":restaurant_obj,
